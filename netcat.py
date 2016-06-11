@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+
 import sys
 import socket
 import getopt
@@ -17,15 +19,15 @@ def usage():
     print
     print "Usage: netcat.py -t target host -p port"
 
-    print "-l --listen - listen on [host]:[port] for 
+    print "-l --listen - listen on [host]:[port] for \
     incoming connections"
 
-    print "-e --execute = file to run - execute the given file 
+    print "-e --execute = file to run - execute the given file \
     upon a receiving a connection"
 
     print "-c --command - initialize a command shell"
     
-    print "-u --upload = destination - upon receiving connection
+    print "-u --upload = destination - upon receiving connection \
     upload a file and write to [destination]"
 
     print
@@ -75,7 +77,7 @@ def runCommand(command):
     command = command.rstrip()
     
     try:
-        output = subprocess.check_output(command, stderr = subprocess, STDOUT, shell = True)
+        output = subprocess.check_output(command, stderr = subprocess.STDOUT, shell = True)
     except:
         output = "Failed to execute command.\r\n"
 
@@ -178,3 +180,5 @@ def main():
 
     if listen:
         serverLoop()
+
+main()
