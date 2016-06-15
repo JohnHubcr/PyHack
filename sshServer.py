@@ -44,3 +44,38 @@ try:
     session = paramiko.Transport(client)
     session.add_server_key(hostKey)
     server = Server()
+
+    try:
+        session.start_server(server = server)
+    except paramiko.SSHException, x:
+        print '[-] SSH negotiation failed.'
+
+    chan = session.accept(20)
+    print '[+] Authenticated!'
+    print chan.recv(1024)
+    chan.send('Welcome to ssh')
+    
+    while True:
+        try:
+            command = raw_input("Enter command: ").strip("\n")
+            
+            if command != "exit":
+                chan.send(command)
+                print chan.recv(1024) + "\n"
+            else:
+                chan.send("exit")
+                print "exiting"
+                session.close()
+                raise Exception("Exit")
+        
+        except KeyboardInterrupt:
+            session.close()
+except Exception, e:
+    print '[-] Caught exception: ' + str(e)
+    
+    try:
+        session.close()
+    except:
+        pass
+    
+    sys.exit(1)
