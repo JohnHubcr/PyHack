@@ -22,3 +22,5 @@ print sniffer.recvfrom(65565)
 if os.name == "nt":
     sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
 
+def test:
+    pass
