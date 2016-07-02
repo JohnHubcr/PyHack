@@ -1,0 +1,7 @@
+import threading
+from scapy.all import *
+
+def packetCallback(packet):
+    
+    if packet[TCP].payload:
+        mailPacket = str(packet[TCP].payload)
