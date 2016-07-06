@@ -52,8 +52,11 @@ def Fuzzer(IIntruderPayloadGenerator):
 
         offset = random.randint(0, len(originalPayload) - 1)
         payload = originalPayload[:offset]
-
+        
         if picker == 1:
+            payload += "'"
+        
+        if picker == 2:
             payload += "<script>alert('Hello, world!');</script>"
         
         if picker == 3:
